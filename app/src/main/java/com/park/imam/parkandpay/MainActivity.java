@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
         });
         server = new Server(MainActivity.this);
         spot_lv = (ListView)findViewById(R.id.spot_lv);
-       //login();
-        redirctUser();
+       login();
+       // redirctUser();
 
 
 
@@ -180,14 +180,21 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 try
                 {
-                    if( !((EditText)dialog.findViewById(R.id.userName_tx)).getText().toString().isEmpty())
+                    if( true)
                     {
                         AppUser tuser = new AppUser();
-                        tuser.UserFullName = ((EditText)dialog.findViewById(R.id.userFullName_tx)).getText().toString();
-                        tuser.UserName = ((EditText)dialog.findViewById(R.id.userName_tx)).getText().toString();
-                        tuser.UserPhone = ((EditText)dialog.findViewById(R.id.userPhone_tx)).getText().toString();
-                        tuser.UserEmail = ((EditText)dialog.findViewById(R.id.userEmail_tx)).getText().toString();
-                        tuser.UserPassword = ((EditText)dialog.findViewById(R.id.userPassword_tx)).getText().toString();
+                        try
+                        {
+                            tuser.UserFullName = ((EditText)dialog.findViewById(R.id.userFullName_tx)).getText().toString();
+                            tuser.UserName = ((EditText)dialog.findViewById(R.id.userName_tx)).getText().toString();
+                            tuser.UserPhone = ((EditText)dialog.findViewById(R.id.userPhone_tx)).getText().toString();
+                            tuser.UserEmail = ((EditText)dialog.findViewById(R.id.userEmail_tx)).getText().toString();
+                            tuser.UserPassword = ((EditText)dialog.findViewById(R.id.userPassword_tx)).getText().toString();
+                        }catch (Exception e)
+                        {
+                            Log.e("error",e.getLocalizedMessage());
+                        }
+
                         Log.e("user", tuser.toJson().toString());
 
 
