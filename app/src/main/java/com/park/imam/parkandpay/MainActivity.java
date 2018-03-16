@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
             }
             else if(user.UserType==1)
             {
+
                 server.getSpots(new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody)
@@ -128,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                         String res;
                         try {
                             res = new String(responseBody, "UTF-8");
-                            Log.e("data",res);
+                            Log.e("datat",res);
                             JSONArray jspots = new JSONArray(res);
                             for(int i=0;i<jspots.length();i++)
                             {
