@@ -41,9 +41,11 @@ public class Server {
 
     public void sinUpUser(AppUser user, AsyncHttpResponseHandler handler)
     {
+        Log.e("Out obj",user.UserFullName);
+        Log.e("Out",user.toJson().toString());
         StringEntity entity = new StringEntity(user.toJson().toString(), "UTF-8");
         Log.i(" out ", user.toJson().toString());
-        client.post(context, API_URL + "AppUsers/PostUser", entity, "application/json", handler);
+        client.post(context, API_URL + "AppUsers/PostAppUser", entity, "application/json", handler);
     }
 
     public void getSpots(AsyncHttpResponseHandler handler)

@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 public class AppUser
 {
-    public int Id,UserType,UserStatus,UserPoints;
+    public int Id,UserType,UserStatus,UserPoints=0;
     public double Ewallet=0;
     public String UserName,UserFullName,UserPassword,UserEmail, UserPlate, UserPhone;
 
@@ -33,7 +33,7 @@ public class AppUser
             this.UserEmail = t.getString("UserEmail");
             this.UserPlate = t.getString("UserPlate");
             this.UserPhone = t.getString("UserPhone");
-            this.UserPoints = t.getInt("UserPoints");
+           // this.UserPoints = t.getInt("UserPoints");
             this.UserStatus = t.getInt("UserStatus");
 
         } catch (JSONException e) {
@@ -45,7 +45,7 @@ public class AppUser
     {
         JSONObject t = new JSONObject();
         try {
-            t.put("Id",this.Id);
+           // t.put("Id",this.Id);
             t.put("Ewallet",this.Ewallet);
             t.put("UserType",this.UserType);
             t.put("UserName",this.UserName);
