@@ -56,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
        //login();
         redirctUser();
 
-
+     // this is for test posting to github
+        //Error:Execution failed for task ':app:transformClassesWithDexBuilderForDebug'.
 
     }
 
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                         String res = null;
                         try {
                             res = new String(responseBody, "UTF-8");
-                            Log.i("OK", res);
+                            Log.i("OK",  res);
                             JSONObject juser = new JSONObject(res);
                             user = new AppUser(juser.toString());
                             dialog.cancel();
