@@ -1,16 +1,13 @@
 package com.park.imam.parkandpay;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -43,14 +40,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         server = new Server(MainActivity.this);
         spot_lv = (ListView)findViewById(R.id.spot_lv);
        login();
@@ -125,8 +115,42 @@ public class MainActivity extends AppCompatActivity {
         {
             if(user.UserType==2)
             {
-                Intent admin_activity = new Intent() ;
-                MainActivity.this.startActivity(admin_activity);
+//                Intent admin_activity = new Intent() ;
+//                MainActivity.this.startActivity(admin_activity);
+            }
+            else if(user.UserType==1)
+            {
+                server.getSpots(new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody)
+                    {
+                        ArrayList<ParkingSpot> spots = new ArrayList<>();
+                        String res;
+                        try {
+                            res = new String(responseBody, "UTF-8");
+                            Log.e("data",res);
+                            JSONArray jspots = new JSONArray(res);
+                            for(int i=0;i<jspots.length();i++)
+                            {
+                                ParkingSpot t = new ParkingSpot( jspots.get(i).toString());
+                                spots.add(t);
+                            }
+                            ParkingSpotAdapter adapter = new ParkingSpotAdapter(MainActivity.this,spots);
+                            spot_lv.setAdapter(adapter);
+
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                    }
+                });
             }
         }
         else
@@ -134,36 +158,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
-        server.getSpots(new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody)
-            {
-                ArrayList<ParkingSpot> spots = new ArrayList<>();
-                String res;
-                try {
-                    res = new String(responseBody, "UTF-8");
-                    JSONArray jspots = new JSONArray(res);
-                    for(int i=0;i<jspots.length();i++)
-                    {
-                        ParkingSpot t = new ParkingSpot( jspots.get(i).toString());
-                        spots.add(t);
-                    }
-                    ParkingSpotAdapter adapter = new ParkingSpotAdapter(MainActivity.this,spots);
-                    spot_lv.setAdapter(adapter);
 
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-            }
-        });
     }
 
     public void signup()
